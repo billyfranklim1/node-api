@@ -18,6 +18,11 @@ exports.signin = function (req, res, next) {
                     .send({ message: "Usuário não encontrado", code: 404 });
             }
 
+            if(!req.body.password) {
+                return res.status(400)
+                    .send({ message: "Senha não informada", code: 400 });
+            }
+
             var passwordIsValid = bcrypt.compareSync(
                 req.body.password,
                 user.password
