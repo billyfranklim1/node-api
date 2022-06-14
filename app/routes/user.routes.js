@@ -8,8 +8,8 @@ module.exports = function(app) {
   });
   app.get("/api/user/:id", [authJwt.verifyToken], controller.getUser);
   app.get('/api/user',[authJwt.verifyToken],controller.getUsers);
-  app.post('/api/user',controller.createUser);
-  app.put('/api/user',controller.updateUser);
-  app.delete('/api/user/:id',controller.delete);
+  app.post('/api/user',[authJwt.verifyToken],controller.createUser);
+  app.put('/api/user',[authJwt.verifyToken],controller.updateUser);
+  app.delete('/api/user/:id',[authJwt.verifyToken],controller.delete);
 };
 
