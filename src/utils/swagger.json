@@ -1,0 +1,440 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Api Auth",
+    "description": "Documentation for the API Auth",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "contact": {
+      "name": "Billy",
+      "email": "billyfranklim@gmail.com",
+      "url": "https://www.linkedin.com/in/billyfranklim-p-b0a680149/"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Local server"
+    },
+    {
+      "url": "https://node-api-bfap.herokuapp.com/",
+      "description": "Production Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication"
+    },
+    {
+      "name": "User",
+      "description": "User"
+    },
+    {
+      "name": "Repositories",
+      "description": "Operations about Repositories"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json",
+    "application/x-www-form-urlencoded"
+  ],
+  "produces": [
+    "application/json",
+    "application/x-www-form-urlencoded"
+  ],
+  "paths": {
+    "/api/auth/signin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Singin",
+        "description": "Singin",
+        "operationId": "singin",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Singin",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Singin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Singin",
+            "schema": {
+               "$ref": "#/components/schemas/Singin"
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "schema": {
+               "$ref": "#/components/schemas/Error"
+            }
+          },
+          "400": {
+            "description": "Senha não informada",
+            "schema": {
+               "$ref": "#/components/schemas/Error"
+            }
+          },
+          "401": {
+            "description": "Senha inválida",
+            "schema": {
+               "$ref": "#/components/schemas/Error"
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "schema": {
+               "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/singup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Singup",
+        "description": "Singup",
+        "operationId": "Singup",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Singin",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Singup"
+            }
+          }
+        ]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "logout",
+        "description": "logout",
+        "operationId": "logout",
+        "parameters": [
+        
+        ]
+      }
+    },
+    "/repositories": {
+      "get": {
+        "summary": "Get all repositories",
+        "operationId": "listRepositories",
+        "tags": [
+          "Repositories"
+        ],
+        "description": "Get a list of all repositories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Repositories"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new repository",
+        "operationId": "createRepository",
+        "tags": [
+          "Repositories"
+        ],
+        "description": "Creates a new repository with given input array",
+        "parameters": [],
+        "requestBody": {
+          "name": "body",
+          "in": "body",
+          "description": "Repository that we want to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Repository"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The repository has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/RepositorySucess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/repositories/{_id}": {
+      "put": {
+        "tags": [
+          "Repositories"
+        ],
+        "summary": "Updates a repository in the store with form data",
+        "operationId": "updateRepository",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "ID of repository that needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "description": "Updated title of the repository",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "Updated url of the repository",
+                    "type": "string"
+                  },
+                  "techs": {
+                    "description": "Updated techs of the repository",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "title"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Repository updated.",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a repository",
+        "tags": [
+          "Repositories"
+        ],
+        "description": "Delete a repository with given ID",
+        "operationId": "removeRepository",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "ID of repository that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Repository is deleted",
+            "schema": {
+              "$ref": "#/definitions/Repository"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "number"
+          }
+        }
+      },
+      "Singin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Singup": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "singIn": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Repository": {
+      "required": [
+        "title",
+        "url",
+        "techs"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "techs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RepositorySucess": {
+      "required": [
+        "_id",
+        "title",
+        "url",
+        "techs",
+        "likes"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "techs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "likes": {
+          "type": "number"
+        }
+      }
+    },
+    "updateRepository": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "techs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Repositories": {
+      "type": "object",
+      "$ref": "#/definitions/Repository"
+    }
+  }
+}
