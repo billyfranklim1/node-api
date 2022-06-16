@@ -1,15 +1,12 @@
-# backend_desafio_02
+# API Auth
 
-Antes de rodar com docker, altere o .env para HOSTMONGO=mongo:${MONGO_INTERNAL_PORT}/
-
+Before running with docker, change .env to HOSTMONGO=mongo:${MONGO_INTERNAL_PORT}/
 ```
 sudo docker-compose --env-file ./.env up -d 
 ```
-Para rodar os teste com o docker, rode o comando:
-
+To run the tests with docker, run the command:
 ```
 docker-compose -f docker-compose.test.yml up
-
 ```
 
 # Estrutura da API
@@ -55,7 +52,7 @@ docker-compose -f docker-compose.test.yml up
 │       └── swagger.json
 └── yarn.lock
 ```
-# Teste com o Swagger
+# Test with the Swagger
 
 ```
 https://localhost:3333/api-docs
