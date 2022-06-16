@@ -1,10 +1,10 @@
 const app = require("../src/index");
 const { useDatabase } = require("../src/database/index");
-const { NODE_EXTERNAL_PORT, HOSTMONGO, MONGOBD } = require("../config/index");
+const { PORT, HOSTMONGO, MONGOBD } = require("../config/index");
 useDatabase(HOSTMONGO, MONGOBD);
 
-app.listen(NODE_EXTERNAL_PORT, () => {
+app.listen(PORT, () => {
   console.log(
-    `Server is running on port: ${NODE_EXTERNAL_PORT}\n`
+    `Server is running on port: ${PORT}\n`
   );
 });

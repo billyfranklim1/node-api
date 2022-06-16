@@ -7,7 +7,7 @@ services:
         container_name: api_${NODE_ENV}
         restart: always        
         ports: 
-            - ${NODE_INTERNAL_PORT}:${NODE_EXTERNAL_PORT}
+            - ${NODE_INTERNAL_PORT}:${PORT}
         links: 
             - mongo 
         networks: 

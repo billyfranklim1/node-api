@@ -6,7 +6,7 @@ services:
         build: .
         container_name: api_${NODE_ENV}   
         ports: 
-            - ${NODE_INTERNAL_PORT}:${NODE_EXTERNAL_PORT}
+            - ${NODE_INTERNAL_PORT}:${PORT}
         links: 
             - mongo 
         networks: 
